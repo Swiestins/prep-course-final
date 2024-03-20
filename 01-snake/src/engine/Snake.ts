@@ -2,14 +2,43 @@ import { Cell } from "./Cell";
 import { Direction } from "./Direction";
 
 export class Snake {
-  setDirection(direction: Direction) {}
+  head: Cell = new Cell(2, 0);
+  tail: Cell[] = [new Cell(0, 0), new Cell(1, 0)];
+  direction: Direction = "Right";
 
-  move() {}
+  setDirection(newDirection: Direction) {
+    //ifi lai nevar iet uz atpakaļu 
+    this.direction = newDirection;
+  }
+
+  move() {
+    const oldHead = new Cell(this.head.x, this.head.y);
+if(this.direction==="Right"){
+    this.head = new Cell(this.head.x + 1, this.head.y);
+    this.tail.shift();
+    this.tail.push(oldHead);
+}
+else if(this.direction==="Down"){
+  this.head=new Cell(this.head.x,this.head.y+1)
+  this.tail.shift();
+  this.tail.push(oldHead);
+}
+else if(this.direction==="Left"){
+  this.head=new Cell(this.head.x-1,this.head.y)
+  this.tail.shift();
+  this.tail.push(oldHead);
+}
+else if(this.direction==="Up"){
+  this.head=new Cell(this.head.x,this.head.y-1)
+  this.tail.shift();
+  this.tail.push(oldHead);
+}
+  }
 
   grow() {}
 
   getHead(): Cell {
-    return new Cell(4, 0);
+    return this.head;
   }
 
   getDirection(): Direction {
@@ -17,7 +46,7 @@ export class Snake {
   }
 
   getTail(): Cell[] {
-    return [new Cell(0, 0), new Cell(2, 0)];
+    return this.tail;
   }
 
   isTakenBySnake(cell: Cell): boolean {
